@@ -61,19 +61,20 @@ function _each(obj, callback, context = window) {
  */
 async function queryDepart() {
 	let result,
-		department = localStorage.getItem('department');
+		department = localStorage.getItem('department');  //从本地获取数据
 	if (department) {
-		department = JSON.parse(department);
-		if (new Date().getTime() - department.time <= 86400000) {
+		department = JSON.parse(department);  //隐式类型转化
+		if (new Date().getTime() - department.time <= 86400000) {   //86400000是24h
 			return department.data;
 		}
 	}
-	result = await axios.get('/department/list');
+	result = await axios.get('/department/list');   
+	//把数据存储到本地
 	localStorage.setItem('department', JSON.stringify({
 		time: new Date().getTime(),
 		data: result
 	}));
-	return result;
+	return result;  //哪里调用了queryDepart函数，哪里就可以获取到部门信息
 }
 
 /*
@@ -85,13 +86,14 @@ async function queryJob() {
 	if (job) {
 		job = JSON.parse(job);
 		if (new Date().getTime() - job.time <= 86400000) {
-			return job.data;
+			return job.data;  //如果有数据，直接返回数据
 		}
 	}
-	result = await axios.get('/job/list');
+	result = await axios.get('/job/list'); 
+	//缓存数据
 	localStorage.setItem('job', JSON.stringify({
 		time: new Date().getTime(),
 		data: result
 	}));
-	return result;
+	return result;   //哪里调用了queryJob函数，哪里就可以获取到职务信息
 }
