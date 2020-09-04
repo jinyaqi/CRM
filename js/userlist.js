@@ -38,10 +38,10 @@ $(function () {
             } = item;
             //拼接字符串
             str +=
-             `<tr>
+                `<tr>
 				<td class="w3"><input type="checkbox" userId="${id}"></td>
 				<td class="w10">${name}</td>
-				<td class="w5">${sex==0?'男':'女'}</td>
+				<td class="w5">${sex == 0 ? '男' : '女'}</td>
 				<td class="w10">${department}</td>
 				<td class="w10">${job}</td>
 				<td class="w15">${email}</td>
@@ -57,5 +57,15 @@ $(function () {
         $("tbody").html(str)
     }
 
+    // 根据条件显示员工列表
+    searchHandle();
+    function searchHandle() {
+        $(".selectBox").change(showUserList);
+        $(".searchInp").on("keydown", e => {
+            if (e.keyCode === 13) {  // 回车
+                showUserList();
+            }
+        })
+    }
 
 })
